@@ -1,1 +1,95 @@
-<h1> hello</h1>
+<!DOCTYPE html>
+<html>
+<body onload="parseParams()">
+
+<h3>Sugestão de trocas entre amigos</h3>
+
+<br>Minhas Repetidas:<br>
+<textarea id="aTextarea"></textarea>
+
+<br>Minhas que preciso:<br>
+<textarea id="bTextarea"></textarea>
+
+<br>Repetidas do amigo:<br>
+<textarea id="cTextarea"></textarea>
+
+<br>Amigo precisa:<br>
+<textarea id="dTextarea"></textarea>
+<br>
+<br>Troca possível:<br>
+<br>Entregar:<br>
+<textarea id="giveTextarea"></textarea>
+
+<br>Pegar:<br>
+<textarea id="getTextarea"></textarea>
+
+<p>Clique abaixo para processar:</p>
+
+<button type="button" onclick="myFunction()">ANALISAR</button>
+
+<p id="demo"></p>
+
+<script>
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+function parseParams() {
+	var mneed = getParameterByName("preciso");
+	var mhave = getParameterByName("tenho");
+	var tneed = getParameterByName("amigoprecisa");
+	var thave = getParameterByName("amigotem");
+	if (mhave) document.getElementById("aTextarea").value = mhave;
+	if (mneed) document.getElementById("bTextarea").value = mneed;
+	if (thave) document.getElementById("cTextarea").value = thave;
+	if (tneed) document.getElementById("dTextarea").value = tneed;
+}
+
+function myFunction() {
+var mrepeatedTxt = document.getElementById("aTextarea");
+var mneededTxt = document.getElementById("bTextarea");
+var trepeatedTxt = document.getElementById("cTextarea");
+var tneededTxt = document.getElementById("dTextarea");
+
+var have = mrepeatedTxt.value;
+var need = mneededTxt.value;
+var otherHave = trepeatedTxt.value;
+var otherNeed = tneededTxt.value;
+
+var regex = /(\d+)/g;
+
+var arrayHave = have.match(regex);
+var arrayNeed = need.match(regex);
+var arrayGive = [];
+var arrayOtherHave = otherHave.match(regex);
+var arrayOtherNeed = otherNeed.match(regex);
+var arrayGet = [];
+
+for (var i = 0; i < arrayHave.length; i++) {
+	for (var j = 0 ; j < arrayOtherNeed.length ; j++) {
+    	if(arrayHave[i] == arrayOtherNeed[j]) arrayGive.push(arrayHave[i]);
+    }
+}
+
+
+for (var i = 0; i < arrayNeed.length; i++) {
+	for (var j = 0 ; j < arrayOtherHave.length ; j++) {
+    	if(arrayNeed[i] == arrayOtherHave[j]) arrayGet.push(arrayNeed[i]);
+    }
+}
+
+var givetxt = document.getElementById("giveTextarea");
+var gettxt = document.getElementById("getTextarea");
+
+givetxt.value = arrayGive.map(function(e){return e.toString()});
+gettxt.value = arrayGet.map(function(e){return e.toString()});
+}
+</script>
+
+</body>
+</html>
