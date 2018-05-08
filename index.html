@@ -1,127 +1,115 @@
 <!DOCTYPE html>
 <html>
-<body onload="parseParams()">
-
-<h3>Sugestão de trocas entre amigos</h3>
-
-<br>Minhas Repetidas (Lista de Repetidas):<br>
-<textarea id="aTextarea"></textarea>
-
-<br>Minhas que preciso (Falta):<br>
-<textarea id="bTextarea"></textarea>
-
-<br>Repetidas do amigo (Lista de Repetidas):<br>
-<textarea id="cTextarea"></textarea>
-
-<br>Amigo precisa (Falta):<br>
-<textarea id="dTextarea"></textarea>
-<br>
-<br>Troca possível:<br>
-<br>Entregar:<br>
-<textarea id="giveTextarea"></textarea>
-
-<br>Pegar:<br>
-<textarea id="getTextarea"></textarea>
-
-<p>Clique abaixo para processar:</p>
-
-<button type="button" onclick="compare()">ANALISAR</button>
-
-
-<p>Clique abaixo para gerar um link compartilhável com suas figurinhas:</p>
-<button type="button" onclick="share()">COMPARTILHAR</button>
-
-<script>
-function getParameterByName(name, url) {
-if (!url) url = window.location.href;
-name = name.replace(/[\[\]]/g, "\\$&");
-var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-    results = regex.exec(url);
-if (!results) return null;
-if (!results[2]) return '';
-return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-function parseParams() {
-var mneed = getParameterByName("preciso");
-var mhave = getParameterByName("tenho");
-var tneed = getParameterByName("amigoprecisa");
-var thave = getParameterByName("amigotem");
-if (mhave) document.getElementById("aTextarea").value = mhave;
-if (mneed) document.getElementById("bTextarea").value = mneed;
-if (thave) document.getElementById("cTextarea").value = thave;
-if (tneed) document.getElementById("dTextarea").value = tneed;
-}
-function share() {
-var mrepeatedTxt = document.getElementById("aTextarea");
-var mneededTxt = document.getElementById("bTextarea");
-var trepeatedTxt = document.getElementById("cTextarea");
-var tneededTxt = document.getElementById("dTextarea");
-
-var have = mrepeatedTxt.value;
-var need = mneededTxt.value;
-var otherHave = trepeatedTxt.value;
-var otherNeed = tneededTxt.value;
-
-var regex = /(\d+)/g;
-
-var arrayHave = have.match(regex);
-var arrayNeed = need.match(regex);
-var arrayOtherHave = otherHave.match(regex);
-var arrayOtherNeed = otherNeed.match(regex);
-
-var params = "?tenho=" + arrayHave.map(function(e){return e.toString()});
-params += "&preciso=" + arrayNeed.map(function(e){return e.toString()});
-params += "&amigotem=" + arrayOtherHave.map(function(e){return e.toString()});
-params += "&amigoprecisa=" + arrayOtherNeed.map(function(e){return e.toString()});
-window.open(params);
-
-}
-function compare() {
-var mrepeatedTxt = document.getElementById("aTextarea");
-var mneededTxt = document.getElementById("bTextarea");
-var trepeatedTxt = document.getElementById("cTextarea");
-var tneededTxt = document.getElementById("dTextarea");
-
-var have = mrepeatedTxt.value;
-var need = mneededTxt.value;
-var otherHave = trepeatedTxt.value;
-var otherNeed = tneededTxt.value;
-
-var regex = /(\d+)/g;
-
-var arrayHave = have.match(regex);
-var arrayNeed = need.match(regex);
-var arrayGive = [];
-var arrayOtherHave = otherHave.match(regex);
-var arrayOtherNeed = otherNeed.match(regex);
-var arrayGet = [];
-
-for (var i = 0; i < arrayHave.length; i++) {
-if (isNaN(arrayHave[i])) continue;
-var k = parseInt(arrayHave[i]);
-for (var j = 0 ; j < arrayOtherNeed.length ; j++) {
-	if(isNaN(arrayOtherNeed[j])) continue;
-	if(k == parseInt(arrayOtherNeed[j])) arrayGive.push(k);
-}
-}
-
-
-for (var i = 0; i < arrayNeed.length; i++) {
-if (isNaN(arrayNeed[i])) continue;
-var k = parseInt(arrayNeed[i]);
-for (var j = 0 ; j < arrayOtherHave.length ; j++) {
-	if(isNaN(arrayOtherHave[j])) continue;
-	if(k == parseInt(arrayOtherHave[j])) arrayGet.push(k);
-}
-}
-
-var givetxt = document.getElementById("giveTextarea");
-var gettxt = document.getElementById("getTextarea");
-
-givetxt.value = arrayGive.map(function(e){return e.toString()});
-gettxt.value = arrayGet.map(function(e){return e.toString()});
-}
-</script>
-
-</body>
+   <body onload="parseParams()">
+      <h3>Sugestão de trocas entre amigos</h3>
+      <br>Minhas Repetidas (Lista de Repetidas):<br>
+      <textarea id="aTextarea"></textarea>
+      <br>Minhas que preciso (Falta):<br>
+      <textarea id="bTextarea"></textarea>
+      <br>Repetidas do amigo (Lista de Repetidas):<br>
+      <textarea id="cTextarea"></textarea>
+      <br>Amigo precisa (Falta):<br>
+      <textarea id="dTextarea"></textarea>
+      <br>
+      <br>Troca possível:<br>
+      <br>Entregar:<br>
+      <textarea id="giveTextarea"></textarea>
+      <br>Pegar:<br>
+      <textarea id="getTextarea"></textarea>
+      <p>Clique abaixo para processar:</p>
+      <button type="button" onclick="compare()">ANALISAR</button>
+      <p>Clique abaixo para gerar um link compartilhável com suas figurinhas:</p>
+      <button type="button" onclick="share()">COMPARTILHAR</button>
+      <script>
+         function getParameterByName(name, url) {
+         if (!url) url = window.location.href;
+         name = name.replace(/[\[\]]/g, "\\$&");
+         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+             results = regex.exec(url);
+         if (!results) return null;
+         if (!results[2]) return '';
+         return decodeURIComponent(results[2].replace(/\+/g, " "));
+         }
+         function parseParams() {
+         var mneed = getParameterByName("preciso");
+         var mhave = getParameterByName("tenho");
+         var tneed = getParameterByName("amigoprecisa");
+         var thave = getParameterByName("amigotem");
+         if (mhave) document.getElementById("aTextarea").value = mhave;
+         if (mneed) document.getElementById("bTextarea").value = mneed;
+         if (thave) document.getElementById("cTextarea").value = thave;
+         if (tneed) document.getElementById("dTextarea").value = tneed;
+         }
+         function share() {
+         var mrepeatedTxt = document.getElementById("aTextarea");
+         var mneededTxt = document.getElementById("bTextarea");
+         var trepeatedTxt = document.getElementById("cTextarea");
+         var tneededTxt = document.getElementById("dTextarea");
+         
+         var have = mrepeatedTxt.value;
+         var need = mneededTxt.value;
+         var otherHave = trepeatedTxt.value;
+         var otherNeed = tneededTxt.value;
+         
+         var regex = /(\d+)/g;
+         
+         var arrayHave = have.match(regex);
+         var arrayNeed = need.match(regex);
+         var arrayOtherHave = otherHave.match(regex);
+         var arrayOtherNeed = otherNeed.match(regex);
+         
+         var params = "?tenho=" + arrayHave.map(function(e){return e.toString()});
+         params += "&preciso=" + arrayNeed.map(function(e){return e.toString()});
+         params += "&amigotem=" + arrayOtherHave.map(function(e){return e.toString()});
+         params += "&amigoprecisa=" + arrayOtherNeed.map(function(e){return e.toString()});
+         window.open(params);
+         
+         }
+         function compare() {
+         var mrepeatedTxt = document.getElementById("aTextarea");
+         var mneededTxt = document.getElementById("bTextarea");
+         var trepeatedTxt = document.getElementById("cTextarea");
+         var tneededTxt = document.getElementById("dTextarea");
+         
+         var have = mrepeatedTxt.value;
+         var need = mneededTxt.value;
+         var otherHave = trepeatedTxt.value;
+         var otherNeed = tneededTxt.value;
+         
+         var regex = /(\d+)/g;
+         
+         var arrayHave = have.match(regex);
+         var arrayNeed = need.match(regex);
+         var arrayGive = [];
+         var arrayOtherHave = otherHave.match(regex);
+         var arrayOtherNeed = otherNeed.match(regex);
+         var arrayGet = [];
+         
+         for (var i = 0; i < arrayHave.length; i++) {
+         if (isNaN(arrayHave[i])) continue;
+         var k = parseInt(arrayHave[i]);
+         for (var j = 0 ; j < arrayOtherNeed.length ; j++) {
+         	if(isNaN(arrayOtherNeed[j])) continue;
+         	if(k == parseInt(arrayOtherNeed[j])) arrayGive.push(k);
+         }
+         }
+         
+         
+         for (var i = 0; i < arrayNeed.length; i++) {
+         if (isNaN(arrayNeed[i])) continue;
+         var k = parseInt(arrayNeed[i]);
+         for (var j = 0 ; j < arrayOtherHave.length ; j++) {
+         	if(isNaN(arrayOtherHave[j])) continue;
+         	if(k == parseInt(arrayOtherHave[j])) arrayGet.push(k);
+         }
+         }
+         
+         var givetxt = document.getElementById("giveTextarea");
+         var gettxt = document.getElementById("getTextarea");
+         
+         givetxt.value = arrayGive.map(function(e){return e.toString()});
+         gettxt.value = arrayGet.map(function(e){return e.toString()});
+         }
+      </script>
+   </body>
 </html>
