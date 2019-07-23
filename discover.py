@@ -59,15 +59,3 @@ def discover(st, timeout=3, retries=1):
 if __name__ == '__main__':
     for device in discover(SSDP_ALL, timeout=5):
         print "%s\n\t%s" % (device.location, device.server)
-
-"""
-DLNA_RENDERER = 'urn:schemas-upnp-org:device:MediaRenderer:1'
-DLNA_SERVER = 'urn:schemas-upnp-org:device:MediaServer:1'
-GATEWAY = 'urn:schemas-upnp-org:device:InternetGatewayDevice:1'
-PANASONIC_VIERA = 'urn:panasonic-com:device:p00RemoteController:1'
-ROKU = 'roku:ecp'
-SONOS = 'urn:schemas-upnp-org:device:ZonePlayer:1'
-SONY_NEX = 'urn:schemas-sony-com:service:ScalarWebAPI:1'
-WAN_IP = 'urn:schemas-upnp-org:service:WANIPConnection:1'
-WAN_PPP = 'urn:schemas-upnp-org:service:WANPPPConnection:1'
-"""
